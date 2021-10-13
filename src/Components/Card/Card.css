@@ -1,0 +1,20 @@
+.card {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.card_top {
+  display: flex;
+  align-items: flex-start;
+}
+
+.card_title {
+  flex: 1;
+  font-weight: bold;
+  font-size: 1rem;
+  line-height: 1.875rem;
+}
