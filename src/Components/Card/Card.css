@@ -1,4 +1,4 @@
-.card {
+.cards{
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -17,4 +17,26 @@
   font-weight: bold;
   font-size: 1rem;
   line-height: 1.875rem;
+  align-items: center;
 }
+
+.card_top svg{
+    opacity: 0;
+    transition: 200ms;
+}
+
+.cards:hover .card_top svg {
+    opacity: 1;
+}
+
+.card_footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card_footer svg{
+    height: 18px;
+    width: 18px;
+}
+
