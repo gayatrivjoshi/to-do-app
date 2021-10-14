@@ -42,6 +42,7 @@ function Board(props) {
             dragEntered={props.dragEntered}
             dragEnded={props.dragEnded}
             updateCard={props.updateCard}
+            updateDate={props.updateDate}
           />
         ))}
         <Editable
@@ -49,7 +50,10 @@ function Board(props) {
           placeholder="Enter Card Title"
           displayClass="board_add-card"
           editClass="board_add-card_edit"
-          onSubmit={(value) => props.addCard(props.board?.id, value)}
+          onSubmit={(value) => {
+            const createdDate = props.createDate();
+            props.addCard(props.board?.id, value, createdDate);
+          }}
         />
       </div>
     </div>

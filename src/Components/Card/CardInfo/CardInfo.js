@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Calendar,
-  List,
-  Type
-} from "react-feather";
+import { Calendar, List, Type } from "react-feather";
 
 import Modal from "../../Modal/Modal";
 import Editable from "../../Editabled/Editable";
@@ -23,7 +19,7 @@ function CardInfo(props) {
     setValues({ ...values, desc: value });
   };
 
-  const updateDate = (date) => {
+  const handleDate = (date) => {
     if (!date) return;
 
     setValues({
@@ -32,8 +28,11 @@ function CardInfo(props) {
     });
   };
 
-  useEffect((props) => {
-    if (props.updateCard) props.updateCard(props.boardId, values.id, values);
+  useEffect(() => {
+    if (props.updateCard) {
+      const updatedDate = props.updateDate();
+      props.updateCard(props.boardId, values.id, values, updatedDate);
+    }
   }, [values]);
 
   return (
@@ -73,8 +72,8 @@ function CardInfo(props) {
           <input
             type="date"
             defaultValue={values.date}
-            min={new Date().toISOString().substr(0, 10)}
-            onChange={(event) => updateDate(event.target.value)}
+            min={new Date().toDateString("en-GB")}
+            onChange={(event) => handleDate(event.target.value)}
           />
         </div>
       </div>

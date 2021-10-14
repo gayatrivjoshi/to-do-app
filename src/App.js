@@ -7,7 +7,23 @@ import Editable from "./Components/Editabled/Editable";
 
 function App() {
   const [boards, setBoards] = useState(
-    JSON.parse(localStorage.getItem("prac-kanban")) || []
+    JSON.parse(localStorage.getItem("prac-kanban")) || [
+      {
+        id: Date.now() + Math.random() * 2,
+        title: "Todos",
+        cards: [],
+      },
+      {
+        id: Date.now() + Math.random() * 2,
+        title: "In process",
+        cards: [],
+      },
+      {
+        id: Date.now() + Math.random() * 2,
+        title: "Completed",
+        cards: [],
+      },
+    ]
   );
 
   const [targetCard, setTargetCard] = useState({
@@ -34,7 +50,7 @@ function App() {
     setBoards(tempBoards);
   };
 
-  const addCardHandler = (id, title) => {
+  const addCardHandler = (id, title, createdDate) => {
     const index = boards.findIndex((item) => item.id === id);
     if (index < 0) return;
 
@@ -42,9 +58,16 @@ function App() {
     tempBoards[index].cards.push({
       id: Date.now() + Math.random() * 2,
       title,
+      createdDate,
       date: "",
+      updateDate: createdDate,
     });
     setBoards(tempBoards);
+  };
+
+  const createDate = () => {
+    const createDateObj = new Date().toLocaleDateString("en-GB");
+    return createDateObj;
   };
 
   const removeCard = (bid, cid) => {
@@ -99,7 +122,12 @@ function App() {
     });
   };
 
-  const updateCard = (bid, cid, card) => {
+  const updateDate = () => {
+    const updateDateObj = new Date().toLocaleDateString("en-GB");
+    return updateDateObj;
+  };
+
+  const updateCard = (bid, cid, card, updatedDate) => {
     const index = boards.findIndex((item) => item.id === bid);
     if (index < 0) return;
 
@@ -110,6 +138,8 @@ function App() {
     if (cardIndex < 0) return;
 
     tempBoards[index].cards[cardIndex] = card;
+    tempBoards[index].cards[cardIndex].updatedDate = updatedDate;
+    console.log(updatedDate);
 
     setBoards(tempBoards);
   };
@@ -121,7 +151,7 @@ function App() {
   return (
     <div className="app">
       <div className="app_nav">
-        <h1>To Do List</h1>
+        <h1>To-do list</h1>
       </div>
       <div className="app_boards_container">
         <div className="app_boards">
@@ -135,6 +165,8 @@ function App() {
               dragEnded={dragEnded}
               dragEntered={dragEntered}
               updateCard={updateCard}
+              createDate={createDate}
+              updateDate={updateDate}
             />
           ))}
           <div className="app_boards_last">
